@@ -53,5 +53,5 @@ def update(id,title,author,year,isbn):
 
 
 connect()
-update(1, "The Moon", "devin", 1968, 47205072507)
+update(1, "The Moon", "Devin B.", 1968, 47205072507)
 print(view())
