@@ -17,6 +17,7 @@
 #----------------------------------------------------------
 
 from tkinter import *
+import backend
 
 #opens a window ready for customization
 window = Tk()
