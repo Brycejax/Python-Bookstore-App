@@ -4,6 +4,7 @@
 #                 bookstore app: including database.
 #----------------------------------------------------------
 import sqlite3
+from sqlite3.dbapi2 import Connection
 
 #function to create
 def connect():
@@ -41,6 +42,7 @@ def delete(id):
     connection=sqlite3.connect("books.db")
     cur = connection.cursor()
     cur.execute("DELETE FROM book WHERE id=?", (id,))
+    connection.commit()
     connection.close()
 
 def update(id,title,author,year,isbn):
@@ -52,6 +54,6 @@ def update(id,title,author,year,isbn):
     
 
 
-connect()
-update(1, "The Moon", "Devin B.", 1968, 47205072507)
-print(view())
+#connect()
+#update(1, "The Moon", "Devin B.", 1968, 47205072507)
+#print(view())

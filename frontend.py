@@ -19,6 +19,21 @@
 from tkinter import *
 import backend
 
+#this will get a desired row based on the selected row on thr gui
+def get_selected_row(event):
+    global selected_tuple
+    index=list1.curselection()[0]
+    selected_tuple=list1.get(index)
+    entry1.delete(0,END)
+    entry1.insert(END,selected_tuple[1])
+    entry2.delete(0,END)
+    entry2.insert(END,selected_tuple[2])
+    entry3.delete(0,END)
+    entry3.insert(END,selected_tuple[3])
+    entry4.delete(0,END)
+    entry4.insert(END,selected_tuple[4])
+
+
 #this function will retrieve data (tuple) from the database
 def view_command():
     list1.delete(0,END)
@@ -35,8 +50,18 @@ def insert_command():
     backend.insert(title_text.get(), author_text.get(), year_text.get(), ISBN_text.get())
     list1.delete(0,END)
     list1.insert(END,(title_text.get(), author_text.get(), year_text.get(), ISBN_text.get()))
+
+def delete_command():
+    backend.delete(selected_tuple[0])
+
+def update_command():
+    backend.update(selected_tuple[0],title_text.get(), author_text.get(), year_text.get(), ISBN_text.get())
+
+
 #opens a window ready for customization
 window = Tk()
+
+window.wm_title("BookStore")
 
 #creating the labels first
 label1 = Label(window, text="Title")
@@ -79,6 +104,8 @@ scroll.grid(row=2, column=2, rowspan=6)
 list1.configure(yscrollcommand=scroll.set)
 scroll.configure(command=list1.yview)
 
+list1.bind('<<ListboxSelect>>',get_selected_row)
+
 #adding the buttons - NEED TO ADD COMMAND PARAMATER for the functions
 btn1 = Button(window, text= "view all", width=12, command=view_command)
 btn1.grid(row=2,column=3)
@@ -86,16 +113,16 @@ btn1.grid(row=2,column=3)
 btn2 = Button(window, text= "Search Entry", width=12, command=search_command)
 btn2.grid(row=3,column=3)
 
-btn3 = Button(window, text= "Add Entry", width=12, command= insert_command)
+btn3 = Button(window, text= "Add Entry", width=12, command=insert_command)
 btn3.grid(row=4,column=3)
 
-btn4 = Button(window, text= "Update", width=12)
+btn4 = Button(window, text= "Update", width=12, command= update_command)
 btn4.grid(row=5,column=3)
 
-btn5 = Button(window, text= "Delete", width=12)
+btn5 = Button(window, text= "Delete", width=12,command=delete_command)
 btn5.grid(row=6,column=3)
 
-btn6 = Button(window, text= "Close", width=12)
+btn6 = Button(window, text= "Close", width=12,command=window.destroy)
 btn6.grid(row=7,column=3)
 
 
